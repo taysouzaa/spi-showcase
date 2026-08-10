@@ -1,0 +1,11 @@
+{
+  "name": "spi-backup-root",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/start-dev.ps1",
+    "dev:backend": "npm --prefix Backend run dev",
+    "dev:frontend": "npm --prefix Frontend run dev",
+    "build": "npm --prefix Backend run build && npm --prefix Frontend run build"
+  }
+}

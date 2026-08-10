@@ -1,0 +1,59 @@
+# Dependências
+node_modules/
+
+# Build artefacts
+**/dist/
+.vite/
+coverage/
+spi-frontend-hostgator.zip
+*hostgator*.zip
+
+# Ambiente e segredos
+.env
+.env.*
+!.env.example
+!Backend/.env.example
+Backend/.env
+Backend/src/.env
+
+# Dados locais e uploads
+Backend/uploads/
+!Backend/uploads/.gitkeep
+Backend/data/
+!Backend/data/.gitkeep
+Backend/prisma/dev.db
+Backend/prisma/prisma/dev.db
+Backend/credentials/
+Backend/src/.env
+
+# Logs e temporários
+*.log
+Backend/*.log
+Frontend/*.log
+*.tmp
+*.temp
+
+# Chaves e certificados
+*.pem
+*.key
+
+# Sistema/IDE
+.DS_Store
+.vercel
+desktop.ini
+*.claude/
+
+# Arquivos sensíveis de sessão
+NOTAS_SESSAO.txt
+n8n-spi-leads.json
+
+# Assets duplicados na raiz (apenas na raiz do repo, não em src/assets/)
+/amazon.png
+/magalu.png
+/meli.png
+/shein.png
+/shopee.png
+/tiktok.png
+
+# ZIP de deploy
+*.zip

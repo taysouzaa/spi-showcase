@@ -1,0 +1,6 @@
+/* Ponte de integração do Tailwind no projeto.
+   Declara fonte de arquivos para varredura de classes utilitárias. */
+@import 'tailwindcss' source(none);
+@source '../../**/*.{js,ts,jsx,tsx}';
+
+@import 'tw-animate-css';
