@@ -42,12 +42,14 @@ SPI/
 - `POST /auth/login` e `POST /auth/refresh` para sessão.
 - `POST /images/upload` para envio de imagens processadas.
 - `GET /history` para histórico do usuário autenticado.
-- `POST /images/reupload/:id` para reenviar item ao Drive.
+- `GET /history/:id/download-url` para obter URL pré-assinada de download.
+- `DELETE /history/:id` e `DELETE /history` para limpar histórico.
 
-### Google Drive API
-- Upload de imagem processada com service account.
-- Retorno de `gdriveId` e links de visualização.
-- Proxy assinado (`/images/drive/:id?sig=`) para proteção de acesso.
+### Amazon S3
+- Upload da imagem **já processada** via `S3Service` (o original nunca sai do navegador).
+- Credenciais por variável de ambiente ou IAM Role da instância.
+- Bucket privado: o acesso de leitura sai por URL pré-assinada com TTL
+  (`S3_PRESIGN_EXPIRY_SECONDS`, padrão 7 dias), sem proxy do binário pelo backend.
 
 ### Configuração runtime do frontend
 - `Frontend/public/config.js` permite alterar `API_URL` sem rebuild.
