@@ -9,7 +9,7 @@
  *  - Se `timeoutMs` for inválido (≤ 0 ou não finito), executa a operação sem limite de tempo.
  *
  * Por que isso é necessário?
- *  - Chamadas à Google Drive API podem travar por tempo indeterminado em instabilidades de rede.
+ *  - Chamadas ao S3 podem travar por tempo indeterminado em instabilidades de rede.
  *    Sem timeout, a requisição do frontend ficaria pendente até o socket fechar (minutos).
  *  - `withTimeout` garante que o backend sempre responda dentro de um tempo previsível.
  *
@@ -19,9 +19,9 @@
  *
  * Uso:
  *  const resultado = await withTimeout(
- *    () => driveService.uploadFile(params),
+ *    () => s3Service.uploadFile(params),
  *    30000,
- *    'Timeout ao enviar imagem para o Google Drive'
+ *    'Timeout ao enviar imagem para o S3'
  *  );
  */
 import { AppError } from '../errors/AppError.js';

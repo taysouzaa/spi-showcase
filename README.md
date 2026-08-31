@@ -6,6 +6,7 @@
 ![Node](https://img.shields.io/badge/Node.js-20-339933?style=flat-square&logo=node.js)
 ![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react)
 ![AWS](https://img.shields.io/badge/AWS-Amplify%20%2B%20EC2%20%2B%20RDS%20%2B%20S3-FF9900?style=flat-square&logo=amazonaws)
+[![CI](https://github.com/taysouzaa/spi-showcase/actions/workflows/ci.yml/badge.svg)](https://github.com/taysouzaa/spi-showcase/actions/workflows/ci.yml)
 ![Licença](https://img.shields.io/badge/licença-proprietária-red?style=flat-square)
 
 ---
@@ -104,6 +105,33 @@ SPI/
 | Magazine Luiza | 1000px | 1000px | Branco puro |
 | Shein | 1500px | 2000px | Branco (proporção 3:4) |
 | TikTok Shop | 800px | 800px | Branco |
+
+---
+
+## Qualidade
+
+Cada push e cada pull request na `main` roda [`.github/workflows/ci.yml`](.github/workflows/ci.yml):
+testes e build do Backend, typecheck e build do Frontend. O pipeline não precisa de
+secret nenhum — os testes usam variáveis fake de `Backend/vitest.config.ts` e o Prisma
+é mockado, então nada toca a AWS nem o banco.
+
+```bash
+cd Backend
+npm test              # vitest run
+npm run test:coverage # relatório de cobertura
+```
+
+**16 casos cobrindo o que quebra silenciosamente:**
+
+| Suite | O que protege |
+|---|---|
+| `auth.test.ts` | Registro duplicado (409), telefone e e-mail incorretos no login (401) e indisponibilidade do banco (503) |
+| `middlewares.test.ts` | `ensureAuth`: token ausente ou inválido (401), usuário bloqueado (403) e **fail-closed** quando o banco cai (503, nunca libera acesso) |
+| `history.pagination.test.ts` | Teto de `limit` em 100, defaults de paginação e cálculo de `totalPages` / `skip` |
+
+A cobertura é deliberadamente estreita: mira autenticação, autorização e os limites de
+paginação — onde uma regressão vaza dado ou derruba a instância. O processamento de
+imagem em si roda no navegador e é verificado visualmente.
 
 ---
 

@@ -10,14 +10,15 @@
  *  - Aplica timeout individual a cada item na fila — se não sair da fila a tempo, rejeita com 503.
  *
  * Por que isso é necessário?
- *  - O Google Drive API tem quotas e a instância de backend pode ter poucos recursos.
- *    Processar 50 uploads simultâneos poderia sobrecarregar a API e o servidor.
+ *  - O upload roda numa instância EC2 t3.micro. Cada PutObject no S3 segura um
+ *    file descriptor e memória enquanto o stream sobe; 50 uploads simultâneos
+ *    derrubariam a instância antes de esbarrar em qualquer limite do S3.
  *  - Com o limiter, uploads extras esperam na fila e são processados quando um slot abre.
  *  - O timeout de fila (`queueTimeoutMs`) evita que o cliente espere indefinidamente.
  *
  * Uso típico no ImageController:
  *  const limiter = new ConcurrencyLimiter(2, 10);
- *  const resultado = await limiter.run(() => driveService.uploadFile(...));
+ *  const resultado = await limiter.run(() => s3Service.uploadFile(...));
  */
 import { AppError } from '../errors/AppError.js';
 
